@@ -7,10 +7,7 @@ RUN apk --update add git curl tzdata && \
     export GO111MODULE=off && \
     go get github.com/GeertJohan/go.rice && \
     go get github.com/GeertJohan/go.rice/rice && \
-    rice append --exec kas && \
-    curl https://archive.org/download/kindlegen2.9/kindlegen_linux_2.6_i386_v2_9.tar.gz | tar -zx
-
-FROM alpine
+    rice append --exec kas
 COPY --from=build-env /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 COPY --from=build-env /go/src/app/kas /app/kas
 COPY --from=build-env /go/src/app/kindlegen /bin/kindlegen
