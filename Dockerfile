@@ -9,8 +9,6 @@ RUN apk --update add git curl tzdata && \
     go get github.com/GeertJohan/go.rice/rice && \
     rice append --exec kas && \
 
-FROM alpine
-RUN apk --update add --no-cache curl
 WORKDIR /app
 VOLUME ["/app/storage"]
 HEALTHCHECK --interval=1m --timeout=10s \
