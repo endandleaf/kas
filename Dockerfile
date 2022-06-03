@@ -10,9 +10,6 @@ RUN apk --update add git curl tzdata && \
     rice append --exec kas && \
 
 FROM alpine
-COPY --from=build-env /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-COPY --from=build-env /go/src/app/kas /app/kas
-COPY --from=build-env /go/src/app/kindlegen /bin/kindlegen
 RUN apk --update add --no-cache curl
 WORKDIR /app
 VOLUME ["/app/storage"]
