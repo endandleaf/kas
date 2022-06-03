@@ -7,9 +7,7 @@ RUN apk --update add git curl tzdata && \
     export GO111MODULE=off && \
     go get github.com/GeertJohan/go.rice && \
     go get github.com/GeertJohan/go.rice/rice && \
-    rice append --exec kas && \
-
-WORKDIR /app
+    rice append --exec kas
 VOLUME ["/app/storage"]
 HEALTHCHECK --interval=1m --timeout=10s \
   CMD curl -f http://localhost:1323/ping || exit 1
