@@ -7,9 +7,17 @@ RUN apk --update add git curl tzdata && \
     export GO111MODULE=off && \
     go get github.com/GeertJohan/go.rice && \
     go get github.com/GeertJohan/go.rice/rice && \
-    rice append --exec kas 
-VOLUME ["/go/src/app/storage"]
-EXPOSE 1323
+    rice append --exec kas && \
+    curl https://archive.org/download/kindlegen2.9/kindlegen_linux_2.6_i386_v2_9.tar.gz | tar -zx
+
+FROM alpine
+COPY --from=build-env /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+COPY --from=build-env /go/src/app/kas /app/kas
+COPY --from=build-env /go/src/app/kindlegen /bin/kindlegen
+RUN apk --update add --no-cache curl
+WORKDIR /app
+VOLUME ["/app/storage"]
 HEALTHCHECK --interval=1m --timeout=10s \
   CMD curl -f http://localhost:1323/ping || exit 1
-CMD ./kas
+EXPOSE 1323
+cmd ./kas
