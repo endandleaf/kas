@@ -9,7 +9,7 @@ RUN apk --update add git curl tzdata && \
     go get github.com/GeertJohan/go.rice/rice && \
     rice append --exec kas 
 VOLUME ["/go/src/app/storage"]
-EXPOSE 80
+EXPOSE 1323
 HEALTHCHECK --interval=1m --timeout=10s \
-  CMD curl -f http://localhost:80/ping || exit 1
+  CMD curl -f http://localhost:1323/ping || exit 1
 CMD ./kas
